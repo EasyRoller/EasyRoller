@@ -1,0 +1,162 @@
+
+
+
+<html>
+<body>
+
+<table style="height: 200px;" width="431">
+<tbody>
+<tr>
+<td style="width: 59px; text-align: center;"><button>Hack11</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack12</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack13</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack14</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack15</button></td>
+</tr>
+<tr>
+<td style="width: 59px; text-align: center;"><button>Hack21</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack22</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack23</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack24</button></td>
+<td style="width: 59px; text-align: center;"><button>Hack25</button></td>
+</tr>
+<tr>
+    <td style="width: 59px; text-align: center;"><button>Hack21</button></td>
+    <td style="width: 59px; text-align: center;"><button>Hack22</button></td>
+    <td style="width: 59px; text-align: center;"><button>Hack23</button></td>
+    <td style="width: 59px; text-align: center;"><button>Hack24</button></td>
+    <td style="width: 59px; text-align: center;"><button>Hack25</button></td>
+    </tr>
+<tr>
+<td style="width: 59px; text-align: center;"><button  onclick="configscreen()">Config</button></td>
+<td style="width: 59px; text-align: center;"><button> &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;   </button></td>
+<td style="width: 59px; text-align: center;"><button>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</button></td>
+<td style="width: 59px; text-align: center;"><button>reset dicepool</button></td>
+<td style="width: 59px; text-align: center;"><button>Create Roll</button></td>
+</tr>
+</tbody>
+</table>
+
+    
+<b>Dice pool modifier = -2</b>
+
+
+
+
+</body>
+
+
+<script>
+    var charlist;
+    
+    function sendMessage(attname,attvalue,rolename) {
+      var request = new XMLHttpRequest();
+      request.open("POST", "https://discordapp.com/api/webhooks/754591976875098132/pmg3cO_bBUeLFEM5g3ss8qkIbICMbjNc8L0L-aH48m83i8SSfrhBiffzDBHTPRFxLvvm");
+
+      request.setRequestHeader('Content-type', 'application/json');
+
+      var params = {
+        username: "\""+rolename+"\"",
+        avatar_url: "",
+        content: "["+attvalue+"] ->"+attname
+      }
+      document.write(JSON.stringify(params));
+
+      request.send(JSON.stringify(params));
+
+    }
+
+
+function GetAtt(charID,rolename) {    
+    
+    var xmlhttp = new XMLHttpRequest();
+
+    document.open ();
+    document.close ();
+    document.write(charlist);
+
+    xmlhttp.onreadystatechange = function() {
+        //document.write('Reponse:'+JSON.stringify(xmlhttp.responseText)+':<br>');
+        //document.write('status :'+xmlhttp.status+'<br>');
+        //document.write('readyState :'+xmlhttp.readyState+'<br>');
+
+        if (xmlhttp.readyState == 4) {
+            document.write('status :'+xmlhttp.status+'<br>');
+            //document.write('Response:'+ JSON.stringify(xmlhttp.responseText)+':<br>');
+            //document.write('Response:'+ xmlhttp.responseText+':<br>');
+            var obj = JSON.parse( xmlhttp.responseText);
+
+            text = "<ul>";
+            var nbAtt = obj.data.length;
+            document.write('obj.length:'+ nbAtt+':<br>');
+            for (i = 0; i < nbAtt; i++) {
+                
+                text += "<li>" + "<button onclick=\"sendMessage('"+obj.data[i].name+"','"+obj.data[i].value+ "','"+rolename+"')\">"+obj.data[i].name+ "</button>"+":"+obj.data[i].value + "</li>";
+            }
+            text += "</ul>";
+
+            document.write(text);
+        }
+    };
+
+    
+
+    xmlhttp.open("GET", "https://kanka.io/api/1.0/campaigns/18899/entities/"+charID+"/attributes");
+    xmlhttp.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTg3YmY1YTFhNGVmY2JjZWUxYzJiMzg0MjRiMDFhMTAyNmVlZDdhZTJhMzgyMDA2MTE3MTg3YTc0ZDY0ZTE5OGZlNTJjZTFkMmQ1YmRhODIiLCJpYXQiOjE2MDAxMDc3NzEsIm5iZiI6MTYwMDEwNzc3MSwiZXhwIjoxNjMxNjQzNzcxLCJzdWIiOiIzNDQ0MSIsInNjb3BlcyI6W119.0c2_uSIOyYSlNyP32-48NTqSDywVeFOEkZuSR5S0gqwKH6E_Ayvq6uymkY8-6rr9E9dER61MsGtcArDREmshw7KU-ivMcPG_HfXenAXyr6ZToWBgtEO5uEXjmR2IXP6YABRkVP5CauW_J2IduCSqwAXOPhjOn86UvFBzgyuHorbDklPfXAK5ZGq4ezEQu_NfTYSmI3U3QMRMtpfZhgrvsdd5vg9tHNZkPgukqdpNUSE2y5JOwLLTd1TdkQ0fqv1__mkbhbqoxNgBr0Sxk9mi0PPkxppXQljmoj0Cr1mvXE5SFAiqEtxE6cXpPJrwT8rquig6kCxp8FgHka7XwAqlBkMUUZCQXOdH9uSbZ1hUw_lzogpIomVTzJB8LM1d6CWolpBrb8k1W405AzauP1vwLS_GQkITRMRxSU2MMFOHYCNLkB2pp8mNoZpVWdr8gkdvVUMTMfuJTfxiYNt0TRESRVEczP9bNVx2xTL_9z-wId6BfSIdPiGGqcSlwd3mwtveQWZ4YOAvVgmEFEPX03WW_BEW2WErAeNngn5sS-D5AFreRBHj8m1xqcUq3QwB-30Wpjw9S2IivggY0MQr93163L9hqLcVEqk54YKl1abTVdmC4vhw-3BojMUwQJamxNLvXoNdDqbxImQE535sgiqmyAn1458PnbJZ1WwWTnKSpfw');
+    //xmlhttp.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV');
+    xmlhttp.setRequestHeader('Content-type', 'application/json');
+    xmlhttp.send();
+
+    
+}
+
+function configscreen() {
+document.write('<button onclick="GetChar()">Kanka Characters</button>');
+
+
+}
+
+
+
+function GetChar() {    
+    
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+
+        if (xmlhttp.readyState == 4) {
+            document.write('status :'+xmlhttp.status+'<br>');
+            //document.write('Response:'+ xmlhttp.responseText+':<br>');
+            var obj = JSON.parse( xmlhttp.responseText);
+
+            charlist = "<ul>";
+            var nbChar = obj.data.length;
+            document.write('obj.length:'+ nbChar+':<br>');
+            for (i = 0; i < nbChar; i++) {
+                
+                charlist += "<li>" + "<button onclick=\"GetAtt("+obj.data[i].entity_id
+                                                     +",'"+obj.data[i].name+"')\">"+obj.data[i].name+"->"+obj.data[i].entity_id+ "</button></li>";
+            }
+            charlist += "</ul>";
+
+            document.write(charlist);
+        }
+    };
+
+    
+
+    xmlhttp.open("GET", "https://kanka.io/api/1.0/campaigns/18899/characters");
+    xmlhttp.setRequestHeader('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiMTg3YmY1YTFhNGVmY2JjZWUxYzJiMzg0MjRiMDFhMTAyNmVlZDdhZTJhMzgyMDA2MTE3MTg3YTc0ZDY0ZTE5OGZlNTJjZTFkMmQ1YmRhODIiLCJpYXQiOjE2MDAxMDc3NzEsIm5iZiI6MTYwMDEwNzc3MSwiZXhwIjoxNjMxNjQzNzcxLCJzdWIiOiIzNDQ0MSIsInNjb3BlcyI6W119.0c2_uSIOyYSlNyP32-48NTqSDywVeFOEkZuSR5S0gqwKH6E_Ayvq6uymkY8-6rr9E9dER61MsGtcArDREmshw7KU-ivMcPG_HfXenAXyr6ZToWBgtEO5uEXjmR2IXP6YABRkVP5CauW_J2IduCSqwAXOPhjOn86UvFBzgyuHorbDklPfXAK5ZGq4ezEQu_NfTYSmI3U3QMRMtpfZhgrvsdd5vg9tHNZkPgukqdpNUSE2y5JOwLLTd1TdkQ0fqv1__mkbhbqoxNgBr0Sxk9mi0PPkxppXQljmoj0Cr1mvXE5SFAiqEtxE6cXpPJrwT8rquig6kCxp8FgHka7XwAqlBkMUUZCQXOdH9uSbZ1hUw_lzogpIomVTzJB8LM1d6CWolpBrb8k1W405AzauP1vwLS_GQkITRMRxSU2MMFOHYCNLkB2pp8mNoZpVWdr8gkdvVUMTMfuJTfxiYNt0TRESRVEczP9bNVx2xTL_9z-wId6BfSIdPiGGqcSlwd3mwtveQWZ4YOAvVgmEFEPX03WW_BEW2WErAeNngn5sS-D5AFreRBHj8m1xqcUq3QwB-30Wpjw9S2IivggY0MQr93163L9hqLcVEqk54YKl1abTVdmC4vhw-3BojMUwQJamxNLvXoNdDqbxImQE535sgiqmyAn1458PnbJZ1WwWTnKSpfw');
+    xmlhttp.setRequestHeader('Content-type', 'application/json');
+    xmlhttp.send();
+
+    
+}
+
+
+
+
+</script>
+
+
+</html>
